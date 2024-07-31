@@ -80,6 +80,62 @@ public class Main {
                     System.out.println();
                 }
             }
+
+            else if(order.equals("add_favorite")) {
+                String username = parts[1];
+                String title = parts[2];
+                if(!users.keySet().contains(username)) {
+                    System.out.println("invalid username");
+                }
+                else if(!titles.contains(title)) {
+                    System.out.println("invalid title");
+                }
+                else if(users.get(username).list_favorite_advertises().contains(title)) {
+                    System.out.println("already favorite");
+                }
+                else {
+                    User user = users.get(username);
+                    user.add_favorite(title);
+                    users.put(username,user);
+                    System.out.println("added successfully");
+                }
+            }
+
+            else if(order.equals("rem_favorite")) {
+                String username = parts[1];
+                String title = parts[2];
+                if(!users.keySet().contains(username)) {
+                    System.out.println("invalid username");
+                }
+                else if(!titles.contains(title)) {
+                    System.out.println("invalid title");
+                }
+                else if(!users.get(username).list_favorite_advertises().contains(title)) {
+                    System.out.println("already not favorite");
+                }
+                else {
+                    titles.remove(title);
+                    User user = users.get(username);
+                    user.rem_advertise(title);
+                    users.put(username,user);
+                    System.out.println("removed successfully");
+                }
+            }
+
+            else if(order.equals("list_favorite_advertises")) {
+                String username = parts[1];
+                if(!users.keySet().contains(username)) {
+                    System.out.println("invalid username");
+                }
+                else {
+                    User user = users.get(username);
+                    HashSet<String> favs = user.list_favorite_advertises();
+                    for(String fav : favs) {
+                        System.out.print(fav + " ");
+                    }
+                    System.out.println();
+                }
+            }
         }
     }
 }
