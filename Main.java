@@ -38,8 +38,12 @@ public class Main {
                 }
                 else {
                     titles.add(title);
+                    HashSet<String> tags = new HashSet<String>();
+                    for(int j=3;j < parts.length;j++) {
+                        tags.add(parts[j]);
+                    }
                     User user = users.get(username);
-                    user.add_advertise(title);
+                    user.add_advertise(title, tags);
                     users.put(username,user);
                     System.out.println("posted successfully");
                 }
@@ -73,7 +77,17 @@ public class Main {
                 }
                 else {
                     User user = users.get(username);
-                    HashSet<String> ads = user.list_my_advertises();
+                    HashSet<String> ads;
+                    if(parts.length > 2) {
+                        HashSet<String> tags = new HashSet<String>();
+                        for (int j = 3; j < parts.length; j++) {
+                            tags.add(parts[j]);
+                        }
+                        ads = user.list_my_advertises(tags);
+                    }
+                    else {
+                        ads = user.list_my_advertises();
+                    }
                     for(String ad : ads) {
                         System.out.print(ad + " ");
                     }
@@ -116,7 +130,7 @@ public class Main {
                 else {
                     titles.remove(title);
                     User user = users.get(username);
-                    user.rem_advertise(title);
+                    user.rem_favorite(title);
                     users.put(username,user);
                     System.out.println("removed successfully");
                 }
@@ -129,7 +143,17 @@ public class Main {
                 }
                 else {
                     User user = users.get(username);
-                    HashSet<String> favs = user.list_favorite_advertises();
+                    HashSet<String> favs;
+                    if(parts.length > 2) {
+                        HashSet<String> tags = new HashSet<String>();
+                        for (int j = 3; j < parts.length; j++) {
+                            tags.add(parts[j]);
+                        }
+                        favs = user.list_favorite_advertises(tags);
+                    }
+                    else {
+                        favs = user.list_favorite_advertises();
+                    }
                     for(String fav : favs) {
                         System.out.print(fav + " ");
                     }
